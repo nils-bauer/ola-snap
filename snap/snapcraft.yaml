@@ -1,0 +1,61 @@
+name: ola
+base: core18 # the base snap is the execution environment for this snap
+version: '0.1' # just for humans, typically '1.2+git' or '1.3.2'
+summary: The Open Lighting Architecture - The Travel Adaptor for the Lighting Industry
+description: |
+  The Open Lighting Architecture (OLA) is a framework for controlling entertainment lighting equipment. Within the entertainment lighting industry, the Digital Multiplex protocol (DMX-512) and IP variants such as Streaming ACN (sACN) are used to control lighting fixtures.
+  OLA provides the distribution layer that abstracts away the various protocols used. This allows authors of lighting control software to focus on generating the control information, rather than having to implement support for different hardware devices & network protocols. OLA runs on Linux & Mac OS X, some features will also work on Windows.
+  OLA can also be used to convert between different network protocols. With the use of a USB to DMX512 device, OLA can act as a DMX-over-IP to DMX512 gateway.
+  OLA consists of three parts, the daemon olad, the olad plugins and the client library, libola.
+  
+grade: devel
+confinement: devmode
+
+parts:
+  ola:
+    plugin: autotools
+    source-type: git
+    source: https://github.com/OpenLightingProject/ola.git
+    build-packages:
+      - libcppunit-dev
+      - libcppunit-1.14-0
+      - uuid-dev
+      - pkg-config
+      - libncurses5-dev
+      - libtool
+      - autoconf
+      - automake
+      - g++
+      - libmicrohttpd-dev
+      - libmicrohttpd12
+      - protobuf-compiler
+      - libprotobuf-lite10
+      - python-protobuf
+      - libprotobuf-dev
+      - libprotoc-dev
+      - zlib1g-dev
+      - bison
+      - flex
+      - make
+      - libftdi-dev
+      - libftdi1
+      - libusb-1.0-0-dev
+      - liblo-dev
+      - libavahi-client-dev
+      - python-numpy
+    stage-packages:
+      - libftdi-dev
+      - libusb-0.1-4
+      - libusb-1.0-0
+      - liblo-dev
+      - libmicrohttpd12
+      - libprotobuf-dev
+      - libavahi-client-dev
+      
+apps:
+  olad:
+    command: bin/olad  --pid-location $SNAP/share/ola/pids/ --http-data-dir $SNAP/share/olad/www/ --config-dir $SNAP_USER_DATA --http-port 9090 --rpc-port 9010
+    environment:
+      LD_LIBRARY_PATH: $SNAP/lib:$LD_LIBRARY_PATH
+      PATH: $SNAP/bin:$PATH
+  
