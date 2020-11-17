@@ -18,7 +18,7 @@ parts:
     source: https://github.com/OpenLightingProject/ola.git
     build-packages:
       - libcppunit-dev
-      - libcppunit-1.14-0
+      - libcppunit-1.15-0
       - uuid-dev
       - pkg-config
       - libncurses5-dev
@@ -29,7 +29,7 @@ parts:
       - libmicrohttpd-dev
       - libmicrohttpd12
       - protobuf-compiler
-      - libprotobuf-lite10
+      - libprotobuf-lite17
       - python-protobuf
       - libprotobuf-dev
       - libprotoc-dev
@@ -54,8 +54,8 @@ parts:
       
 apps:
   olad:
-    command: bin/olad  --pid-location $SNAP/share/ola/pids/ --http-data-dir $SNAP/share/olad/www/ --config-dir $SNAP_USER_DATA --http-port 9090 --rpc-port 9010
+    command: usr/local/bin/olad  --pid-location $SNAP/usr/local/share/ola/pids/ --http-data-dir $SNAP/usr/local/share/olad/www/ --config-dir $SNAP_USER_DATA --http-port 9090 --rpc-port 9010
     environment:
-      LD_LIBRARY_PATH: $SNAP/lib:$LD_LIBRARY_PATH
-      PATH: $SNAP/bin:$PATH
+      LD_LIBRARY_PATH: $SNAP/usr/local/lib/:$LD_LIBRARY_PATH
+      PATH: $SNAP/usr/local/bin:$PATH
   
