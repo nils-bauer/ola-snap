@@ -9,7 +9,7 @@ description: |
   OLA consists of three parts, the daemon olad, the olad plugins and the client library, libola.
   
 grade: devel
-confinement: devmode
+confinement: strict
 
 parts:
   ola:
@@ -60,4 +60,8 @@ apps:
     environment:
       LD_LIBRARY_PATH: $SNAP/usr/local/lib/:$LD_LIBRARY_PATH
       PATH: $SNAP/usr/local/bin:$PATH
+    plugs:
+     - network
+     - network-bind
+     - raw-usb
   
